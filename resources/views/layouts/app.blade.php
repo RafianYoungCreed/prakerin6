@@ -25,10 +25,7 @@
         ]); ?>
     </script>
 </head>
-<body style="background: url({{asset('ajah.jpg')}}); 
-             background-repeat: no-repeat;
-             background-size: cover; 
-             background-attachment: fixed;">
+<body>
     <div id="app">
         <nav class="navbar navbar-default navbar-static-top">
             <div class="container">
@@ -57,7 +54,13 @@
                         @role('admin')
                             <li><a href="{{ route('authors.index') }}">Penulis</a></li>
                             <li><a href="{{ route('books.index') }}">Buku</a></li>
+                            <li><a href="{{ route('members.index') }}">Member</a></li>
+                            <li><a href="{{ route('statistics.index') }}">Peminjaman</a></li>
+
                         @endrole
+                        @if (auth()->check())
+                            <li><a href="{{ url('/settings/profile') }}">Profil</a></li>
+                        @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -73,6 +76,7 @@
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{ url('/settings/password') }}"><i class="fa fa-btn fa-lock"></i> Ubah Password</a></li>
                                     <li>
                                         <a href="{{ url('/logout') }}"
                                             onclick="event.preventDefault();
@@ -96,7 +100,7 @@
     </div>
 
     <!-- Scripts -->
-    <script src="{{asset('js/app.js')}}"></script>
+    <script src="/js/app.js"></script>
     <script src="{{ asset('table/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('table/js/dataTables.bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/selectize.min.js') }}"></script>

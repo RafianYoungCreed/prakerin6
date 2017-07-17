@@ -57,13 +57,20 @@ class User extends Authenticatable
     	{
     		return $this->hasMany('App\BorrowLog');
     	}
+        public function generateVerificationToken()
+        {
+            $token = $this->verification_token;
+            if (!$token){
+                $token = str_random(40);
+                $this->verification_token = $token;
+                $this->save();
+            }
+        }
 
         public function sendVerification()
         {
+            $token = $this->generateVerificationToken();
             $user = $this;
-            $token = str_random(40);
-            $user->verification_token = $token;
-            $user->save();
             
             Mail::send('auth.emails.verification', compact('user', 'token'), function ($m) use ($user) {
                 $m->to($user->email, $user->name)->subject('Verifikasi Akun Larapus');
